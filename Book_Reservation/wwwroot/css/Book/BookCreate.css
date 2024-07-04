@@ -1,0 +1,43 @@
+﻿/* bookcreate.css */
+
+/* Set background color */
+body {
+    background-color: #f9e4ed; /* Light pink background color */
+}
+
+/* Apply pink color theme to text */
+.container {
+    color: #ec008c; /* Darker pink color for content */
+}
+
+.form-control,
+.btn-primary {
+    background-color: #ec008c; /* Darker pink color */
+    color: white;
+    border-color: #ec008c; /* Darker pink color */
+}
+
+/* Style image */
+#displayImage {
+    max-width: 400px;
+    max-height: 400px;
+    border: 2px solid #ec008c; /* Darker pink border */
+    border-radius: 10px;
+}
+
+
+/*work with javascript*/
+.highlight-input {
+    border: 2px solid red; /* Red border for highlighting */
+    background-color: #ffe6e6; /* Light pink background color */
+    transition: border-color 0.3s ease-in-out, background-color 0.3s ease-in-out; /* Smooth transition for visual effect */
+    box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); /* Slight red shadow for depth */
+    outline: none; /* Remove default outline */
+}
+
+    /* Hover effect for better feedback */
+    .highlight-input:hover {
+        border-color: #ff9999; /* Lighter red border on hover */
+        background-color: #ffe0e0; /* Slightly darker pink background on hover */
+        box-shadow: 0 0 8px rgba(255, 0, 0, 0.7); /* Slightly stronger shadow on hover */
+    }

@@ -1,0 +1,266 @@
+﻿@model Book_Reservation.ViewModels.BookPagingViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    /* Custom styles for the library theme */
+    .form-inline .form-control {
+        /* Style for the search input field */
+        border-radius: 5px;
+        border-color: #007BFF;
+        color: #333;
+    }
+
+    .form-inline .form-group {
+        margin-right: 10px;
+    }
+
+    .form-inline .btn-primary {
+        /* Style for the "Search & Filter" button */
+        background-color: #007BFF;
+        color: #fff;
+        border-color: #007BFF;
+        border-radius: 5px;
+    }
+
+        .form-inline .btn-primary:hover {
+            background-color: #0056b3; /* Replace this with your desired hover color */
+        }
+
+        .form-inline .btn-primary:focus {
+            box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+        }
+
+    .form-inline .form-group label {
+        /* Style for the labels */
+        color: #333;
+        font-weight: 500;
+    }
+
+    .form-inline .form-group select.form-control {
+        /* Style for the dropdown select */
+        border-radius: 5px;
+        border-color: #007BFF;
+        color: #333;
+        background-color: #fff;
+    }
+
+    /* Custom styles for the search and filter form */
+    .search-form {
+        display: flex;
+        align-items: center;
+    }
+
+    .search-input {
+        flex: 1;
+    }
+
+    .filter-box {
+        flex: 1;
+        margin-left: 10px; /* Adjust the margin as needed */
+        margin-right: 10px;
+    }
+
+    .search-button {
+        margin-left: 10px; /* Adjust the margin as needed */
+    }
+
+    /* Set the size of the filter box */
+    .form-control.filter-box {
+        height: 31px; /* Adjust the height as needed */
+    }
+</style>
+
+
+<div class="container-fluid">
+    <div class="pricing-header p-2 pb-md-2 mx-auto text-center">
+        <h1 class="display-6 text-center mb-4">Book Index</h1>
+        <p class="fs-5 text-body-secondary">
+            <a class="btn btn-primary" asp-action="Create">
+                <i class="fa-sharp fa-light fa-plus fa-2xl" style="color: #ffffff;"></i> Create New
+            </a>
+        </p>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <form asp-controller="Book" asp-action="Index" method="get" class="search-form">
+                <div class="form-group search-input">
+                    <label for="searchText" class="sr-only">Search</label>
+                    <input type="text" class="form-control form-control-sm" id="searchText" name="searchText" placeholder="Search by Book Name" value="@ViewBag.CurrentSearchText">
+                    <!-- Add hidden input fields for the search parameters -->
+                    @*<input type="hidden" id="searchText" name="searchText" value="@ViewBag.CurrentSearchText" />
+                    <input type="hidden" id="filterType" name="filterType" value="@ViewBag.CurrentFilterType" />*@
+                </div>
+                <div class="form-group filter-box">
+                    <select class="form-control form-control-sm filter-box" id="filterType" name="filterType" placeholder="Filter by Book Type">
+                        <option value="">All</option>
+                        <option value="2">Bizarre</option>
+                        <option value="3">Action</option>
+                        <option value="4">Scary</option>
+                        <option value="5">Programming</option>
+                        <option value="6">Video Games</option>
+                        <!-- Add more options for other book types as needed -->
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm search-button">Search & Filter</button>
+            </form>
+        </div>
+    </div>
+
+
+    <div>
+
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BookViewModels[0].BookName)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.BookViewModels[0].BookTypeName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BookViewModels[0].NumStock)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BookViewModels[0].BookIsbn)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BookViewModels[0].BookCost)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BookViewModels[0].BookPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BookViewModels[0].ImagePath)
+                    </th>
+                    @*<th>
+                    @Html.DisplayNameFor(model => model.BookStatus)
+                    </th>*@
+                    @*            <th>
+                    @Html.DisplayNameFor(model => model.InsertBy)
+                    </th>
+                    <th>
+                    @Html.DisplayNameFor(model => model.InsertDate)
+                    </th>
+                    <th>
+                    @Html.DisplayNameFor(model => model.UpdateBy)
+                    </th>
+                    <th>
+                    @Html.DisplayNameFor(model => model.UpdateDate)
+                    </th>*@
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.BookViewModels.Count > 0)
+                {
+                    @foreach (var item in Model.BookViewModels)
+                    {
+                        var imagePath = "/Images/Books/" + item.Path;
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BookName)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BookTypeName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NumStock)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BookIsbn)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BookCost)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BookPrice)
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.Path))
+                                {
+                                    <img src="@imagePath" height="auto;" width="200px;" />
+                                }
+                                else
+                                {
+                                    <img style="width: 100%; height: auto" class="card-img-top" src="~/images/no_images.png">
+                                }
+                            </td>
+
+                            @*<td>
+                    @Html.DisplayFor(modelItem => item.BookStatus)
+                    </td>*@
+                            @*                <td>
+                    @Html.DisplayFor(modelItem => item.InsertBy)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.InsertDate)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.UpdateBy)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.UpdateDate)
+                    </td>*@
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.BookId" class="btn btn-sm btn-primary">
+                                    <i class="fa fa-sharp fa-light fa-pen"></i> Edit
+                                </a>
+                                <a asp-action="Details" asp-route-id="@item.BookId" class="btn btn-sm btn-info">Details</a>
+                                <a asp-action="Delete" asp-route-id="@item.BookId" class="btn btn-sm btn-danger">
+                                    <i class="fa fa-sharp fa-light fa-trash-can"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8">No records found.</td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+
+
+    @if (Model.TotalPages > 0)
+    {
+        <ul class="pagination justify-content-end">
+
+            @if (Model.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Book" asp-action="Index" asp-route-Currentpage="1"
+                       asp-route-searchText="@ViewBag.CurrentSearchText" asp-route-filterType="@ViewBag.CurrentFilterType">First</a>
+                </li>
+            }
+
+            @for (var pge = Model.StartPage; pge <= Model.EndPage; pge++)
+            {
+                <li class="page-item @(pge == Model.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-controller="Book" asp-action="Index" asp-route-Currentpage="@pge"
+                       asp-route-searchText="@ViewBag.CurrentSearchText" asp-route-filterType="@ViewBag.CurrentFilterType">@pge</a>
+                </li>
+            }
+
+            @if (Model.CurrentPage < Model.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Book" asp-action="Index" asp-route-Currentpage="@Model.TotalPages"
+                       asp-route-searchText="@ViewBag.CurrentSearchText" asp-route-filterType="@ViewBag.CurrentFilterType">Last</a>
+                </li>
+            }
+        </ul>
+    }
+
+</div>

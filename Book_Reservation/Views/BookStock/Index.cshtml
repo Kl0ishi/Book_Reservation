@@ -1,0 +1,122 @@
+﻿@model Book_Reservation.ViewModels.BookStockPagingViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    .gray-table {
+        background-color: #333333;
+    }
+
+        .gray-table th {
+            color: #CCCCCC;
+        }
+
+        .gray-table tr,
+        .gray-table td {
+            color: #FFFFFF; /* Change this to the desired text color */
+        }
+
+</style>
+
+<div class="container">
+    <h1>BookStock</h1>
+
+    <table class="table table-hover gray-table">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.BookStockViewModels.FirstOrDefault().BookStockId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BookStockViewModels.FirstOrDefault().NumStock)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BookStockViewModels.FirstOrDefault().BookId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BookStockViewModels.FirstOrDefault().BookName)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.BookStockViewModels.FirstOrDefault().InsertBy)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BookStockViewModels.FirstOrDefault().InsertDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BookStockViewModels.FirstOrDefault().UpdateBy)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BookStockViewModels.FirstOrDefault().UpdateDate)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var stockItem in Model.BookStockViewModels)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => stockItem.BookStockId)
+                    </td>
+                    <td>
+                        <span class="gold-font"> @Html.DisplayFor(modelItem => stockItem.NumStock)</span>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => stockItem.BookId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => stockItem.BookName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => stockItem.InsertBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => stockItem.InsertDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => stockItem.UpdateBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => stockItem.UpdateDate)
+                    </td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@stockItem.BookStockId">Edit</a>
+                        <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@stockItem.BookStockId">Details</a>
+                        @*<a asp-action="Delete" asp-route-id="@item.BookStockId">Delete</a>*@
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+    @if (Model.TotalPages > 0)
+    {
+        <ul class="pagination justify-content-end">
+
+            @if (Model.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="BookStock" asp-action="Index" asp-route-Currentpage="1">First</a>
+                </li>
+            }
+
+            @for (var pge = Model.StartPage; pge <= Model.EndPage; pge++)
+            {
+                <li class="page-item @(pge == Model.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-controller="BookStock" asp-action="Index" asp-route-Currentpage="@pge">@pge</a>
+                </li>
+            }
+
+            @if (Model.CurrentPage < Model.TotalPages)
+            {
+
+                <li class="page-item">
+                    <a class="page-link" asp-controller="BookStock" asp-action="Index" asp-route-Currentpage="@Model.TotalPages">Last</a>
+                </li>
+            }
+        </ul>
+    }
+</div>

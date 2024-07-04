@@ -1,0 +1,94 @@
+﻿@model Book_Reservation.Models.Book
+@{
+    Layout = "_EditLayout";
+    ViewData["Title"] = "Edit";
+}
+
+@section CustomStyles {
+    <link rel="stylesheet" href="~/css/blue-library-theme.css" />
+}
+
+<div class="form-container">
+    <h1>Edit Book</h1>
+    <form method="post" asp-controller="Book" asp-action="Edit" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="BookId" />
+
+        <div class="form-group">
+            <label asp-for="BookName">Book Name</label>
+            <input asp-for="BookName" />
+            <span asp-validation-for="BookName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="BookTypeId">Book Type</label>
+            <select asp-for="BookTypeId" asp-items="ViewBag.BookTypeDt"></select>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="BookIsbn">Book ISBN</label>
+            <input asp-for="BookIsbn" />
+            <span asp-validation-for="BookIsbn" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="BookCost">Book Cost</label>
+            <input asp-for="BookCost" type="number" />
+            <span asp-validation-for="BookCost" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="BookPrice">Book Price</label>
+            <input asp-for="BookPrice" class="custom-input" />
+            <span asp-validation-for="BookPrice" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="UpdateBy">Updated By</label>
+            <input asp-for="UpdateBy" />
+            <span asp-validation-for="UpdateBy" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="UpdateDate">Updated Date</label>
+            <input asp-for="UpdateDate" class="custom-input" />
+            <span asp-validation-for="UpdateDate" class="text-danger"></span>
+        </div>
+
+        <div class="row">
+            <div class="col-8">
+                <label asp-for="ImagePath"></label>
+                <input type="file" class="form-control" asp-for="ImagePath" id="ChooseImg" />
+            </div>
+            <div class="col-4">
+                <img src="https://placehold.jp/150*150.png" style="width:100px;height:100px;
+                         border:1px solid green; border-radius:10px;padding:10px;" alt="BookImage" id="PrevImg" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Save" />
+            <a asp-action="Index" class="btn-back-to-list">Back to List</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#ChooseImg').change(function (e) {
+                var url = $('#ChooseImg').val();
+                var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+                if (ChooseImg.files && ChooseImg.files[0] && (ext == "gif" || ext == "jpg" || ext == "jfif" || ext == "png" || ext == "bmp")) {
+                    var reader = new FileReader();
+                    reader.onload = function () {
+                        var output = document.getElementById('PrevImg');
+                        output.src = reader.result;
+                    }
+                    reader.readAsDataURL(e.target.files[0]);
+                }
+
+            });
+        });
+    </script>
+}

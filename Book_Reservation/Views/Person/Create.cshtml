@@ -1,0 +1,66 @@
+﻿@model Person
+@{
+    ViewData["Title"] = "Person";
+}
+<h1>สมัครสมาชิก</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PersonCode" class="control-label"></label>
+                <input asp-for="PersonCode" class="form-control" />
+                <span asp-validation-for="PersonCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PersonName" class="control-label"></label>
+                <input asp-for="PersonName" class="form-control" />
+                <span asp-validation-for="PersonName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PersonTel" class="control-label"></label>
+                <input asp-for="PersonTel" class="form-control" />
+                <span asp-validation-for="PersonTel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PersonAddress" class="control-label"></label>
+                <input asp-for="PersonAddress" class="form-control" />
+                <span asp-validation-for="PersonAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InsertBy" class="control-label"></label>
+                <input asp-for="InsertBy" class="form-control" />
+                <span asp-validation-for="InsertBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InsertDate" class="control-label"></label>
+                <input asp-for="InsertDate" class="form-control" />
+                <span asp-validation-for="InsertDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdateBy" class="control-label"></label>
+                <input asp-for="UpdateBy" class="form-control" />
+                <span asp-validation-for="UpdateBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdateDate" class="control-label"></label>
+                <input asp-for="UpdateDate" class="form-control" />
+                <span asp-validation-for="UpdateDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

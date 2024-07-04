@@ -1,0 +1,74 @@
+﻿@model Person
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>สมาชิก</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PersonId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PersonId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PersonCode)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PersonCode)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PersonName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PersonName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PersonTel)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PersonTel)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PersonAddress)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PersonAddress)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InsertBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InsertBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InsertDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InsertDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UpdateBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UpdateBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UpdateDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UpdateDate)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="submit" asp-for="PersonId" value="Delete" class="btn btn-danger" />
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

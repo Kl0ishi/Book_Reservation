@@ -1,0 +1,83 @@
+﻿@model Book_Reservation.ViewModels.ViewModelSalepaging
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>รายการสั่งซื้อหนังสือ</h1>
+
+<div class="container-fluid">
+    <p>
+        <a class="btn btn-primary" asp-action="Create">สั่งซื้อหนังสือ</a>
+    </p>
+    <div>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>วันที่สั่งซืื้อ</th>
+                    <th>รหัสสั่งซื้อ</th>
+                    <th>สถานะ</th>
+                    <th>จำนวน</th>
+                    <th>ราคารวม</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.veiwModelSales.Count > 0)
+                {
+                    @foreach (var item in Model.veiwModelSales)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.InsertDate)</td>
+                            <td>@Html.DisplayFor(modelItem => item.SaleCode)</td>
+                            <td>@Html.DisplayFor(modelItem => item.StatusName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.SaleNum)</td>
+                            <td>@Html.DisplayFor(modelItem => item.SaleTotal)</td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.SaleId" class="btn btn-sm btn-primary">
+                                    <i class="fa fa-pencil"></i> รายละเอียดการสั่งซื้อ
+                                </a>
+                                @if (item.StatusId != 3 && item.StatusId != 5)
+                                {
+                                    <a asp-action="Cancel" asp-route-id="@item.SaleId" class="btn btn-sm btn-danger">
+                                        <i class="fa fa-trash"></i> ยกเลิกการสั่งซื้อ
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6">No records found.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (Model.TotalPages > 0)
+    {
+        <ul class="pagination justify-content-end">
+            @if (Model.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Sale" asp-action="Index" asp-route-Currentpage="1">First</a>
+                </li>
+            }
+            @for (var pge = Model.StartPage; pge <= Model.EndPage; pge++)
+            {
+                <li class="page-item @(pge == Model.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-controller="Sale" asp-action="Index" asp-route-Currentpage="@pge">@pge</a>
+                </li>
+            }
+            @if (Model.CurrentPage < Model.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Sale" asp-action="Index" asp-route-Currentpage="@Model.TotalPages">Last</a>
+                </li>
+            }
+        </ul>
+    }
+</div>

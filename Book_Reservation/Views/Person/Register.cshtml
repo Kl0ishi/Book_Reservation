@@ -1,0 +1,40 @@
+﻿@model Person
+@{
+    ViewData["Title"] = "Register";
+    Layout = null;
+}
+
+<link rel="stylesheet" href="~/css/register.css" />
+
+<div class="container">
+    <div class="register-section">
+        <h2 class="register-title">Register</h2>
+        <form asp-controller="Person" asp-action="Register" method="post" class="register-form">
+            
+            <div class="form-group">
+                <label asp-for="PersonCode">Username:</label>
+                <input asp-for="PersonCode" type="email" class="form-control" placeholder="Choose a username">
+            </div>
+            <div class="form-group">
+                <label asp-for="Password">Password:</label>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Choose a password">
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="ConfirmPassword" name="ConfirmPassword" class="form-control" placeholder="Confirm your password">
+            </div>
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
+
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+        <div class="login-link">
+            <p>Already have an account? <a asp-controller="Person" asp-action="Login">Login</a></p>
+        </div>
+    </div>
+</div>

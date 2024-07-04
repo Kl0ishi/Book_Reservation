@@ -1,0 +1,114 @@
+﻿@model Book_Reservation.Models.Book
+@{
+    ViewData["Title"] = "Create";
+}
+
+@section CustomStyles {
+    <link href="~/css/book/bookcreate.css" rel="stylesheet" />
+}
+
+<h1>Create</h1>
+
+<h4>Book</h4>
+<hr />
+<div class="container">
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8 col-md-10 col-sm-12">
+            <form method="post" asp-controller="Book" asp-action="Create" enctype="multipart/form-data" onsubmit="return validateForm()">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="BookName" class="control-label"></label>
+                    <input asp-for="BookName" class="form-control" id="BookName" />
+                    <span asp-validation-for="BookName" class="text-danger"></span>
+                    @*<span style="color:red">*กรุณาใส่ชื่อหนังสือ*</span>*@
+                </div>
+                <div class="form-group">
+                    <label asp-for="BookTypeId" class="control-label"></label>
+                    <select asp-for="BookTypeId" class="form-control" id="BookTypeId" asp-items="ViewBag.BookTypeDt"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BookIsbn" class="control-label"></label>
+                    <input asp-for="BookIsbn" class="form-control" />
+                    <span asp-validation-for="BookIsbn" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BookCost" class="control-label"></label>
+                    <input asp-for="BookCost" class="form-control" />
+                    <span asp-validation-for="BookCost" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BookPrice" class="control-label"></label>
+                    <input asp-for="BookPrice" class="form-control" />
+                    <span asp-validation-for="BookPrice" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BookStatus" class="control-label"></label>
+                    <select asp-for="BookStatus" class="form-control">
+                        <option selected>โปรดระบุสถานะ</option>
+                        <option value="True">แสดง</option>
+                        <option value="False">ซ่อนไว้ก่อน</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="InsertBy" class="control-label"></label>
+                    <input asp-for="InsertBy" class="form-control" />
+                    <span asp-validation-for="InsertBy" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="InsertDate" class="control-label"></label>
+                    <input asp-for="InsertDate" class="form-control" value="@ViewBag.InsertDate" />
+                    <span asp-validation-for="InsertDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UpdateBy" class="control-label"></label>
+                    <input asp-for="UpdateBy" class="form-control" />
+                    <span asp-validation-for="UpdateBy" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UpdateDate" class="control-label"></label>
+                    <input asp-for="UpdateDate" class="form-control" type="text" value="@ViewBag.UpdateDate" />
+                    <span asp-validation-for="UpdateDate" class="text-danger"></span>
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        <label asp-for="ImagePath"></label>
+                        <input type="file" class="form-control" asp-for="ImagePath" id="ChooseImg" />
+                    </div>
+                    <div class="col-4">
+                        <img src="https://placehold.jp/150*150.png" style="width:100px;height:100px;
+                         border:1px solid green; border-radius:10px;padding:10px;" alt="BookImage" id="PrevImg" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="numStock" class="form-label">Number of Stock</label>
+                    <input type="number" class="form-control" id="numStock" name="numStock" />
+                    <span id="numStockValidationMessage" class="text-danger" style="display: none;">Please enter the number of stock.</span>
+                </div>
+
+                <div class="form-group mt-3 text-center">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+                <div class="text-center mt-3">
+                    <a asp-action="Index">Back to List</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-lg-4 col-md-10 col-sm-12 mt-4 mt-lg-0">
+            <!-- Right column for image -->
+            <div class="d-flex justify-content-center mb-3">
+                <!-- Center the image horizontally -->
+                <img id="displayImage" src="~/images/book.gif" alt="Selected Image" style="max-width: 400px; max-height: 400px;" />
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/book/bookcreate.js"></script>
+}

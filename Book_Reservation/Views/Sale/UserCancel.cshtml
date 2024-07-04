@@ -1,0 +1,112 @@
+﻿@model Book_Reservation.Models.Sale
+
+@{
+    ViewData["Title"] = "UserCancel";
+}
+
+<h1>UserCancel</h1>
+
+<style>
+    /* Custom styles for the red library theme */
+    body {
+        background-color: #f2f2f2;
+    }
+
+    .container {
+        max-width: 800px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-top: 30px;
+    }
+
+    h1 {
+        color: #cc0000;
+    }
+
+    p {
+        color: #333;
+        font-size: 16px;
+    }
+
+    /* Style the cancel button */
+    .btn-danger {
+        background-color: #cc0000;
+        color: #fff;
+        border: none;
+    }
+
+        .btn-danger:hover {
+            background-color: #990000;
+        }
+
+    /* Style the back button */
+    .btn-secondary {
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+    }
+
+        .btn-secondary:hover {
+            background-color: #0056b3;
+        }
+
+    /* Add any additional styling as per your preference */
+</style>
+
+<div class="container">
+    <h1>รายการสั่งซื้อที่: </h1>
+
+    <div>
+        <p><strong>Sale ID:</strong> @Model.SaleId</p>
+        <p><strong>Sale Code:</strong> @Model.SaleCode</p>
+        <p><strong>Person ID:</strong> @Model.PersonId</p>
+        <p><strong>Sale Num:</strong> @Model.SaleNum</p>
+        <p><strong>Sale Price:</strong> @Model.SalePrice</p>
+        <p><strong>Sale Discount:</strong> @Model.SaleDiscount</p>
+        <p><strong>Sale Total:</strong> @Model.SaleTotal</p>
+        <p><strong>Status ID:</strong> @Model.StatusId</p>
+        <p><strong>Insert By:</strong> @Model.InsertBy</p>
+        <p><strong>Insert Date:</strong> @Model.InsertDate</p>
+        <p><strong>Update By:</strong> @Model.UpdateBy</p>
+        <p><strong>Update Date:</strong> @Model.UpdateDate</p>
+    </div>
+
+    <hr />
+
+    <form id="cancelForm" asp-action="UserCancel" method="post">
+        @Html.AntiForgeryToken()
+
+        <input type="hidden" asp-for="SaleId" />
+        <input type="hidden" asp-for="PersonId" />
+        <input type="hidden" asp-for="StatusId" />
+
+        <button type="button" class="btn btn-danger" id="cancelButton">ยกเลิกการสั่งซื้อ</button>
+        <a asp-action="SaleList" class="btn btn-secondary">กลับสู่หน้าหลัก</a>
+    </form>
+</div>
+
+
+<script>
+    // Add an event listener to the cancel button
+    document.getElementById('cancelButton').addEventListener('click', function () {
+        // Show the confirmation popup
+        Swal.fire({
+            title: 'คุณต้องการจะยกเลิกสินค้าจริงๆหรือไม่',
+            text: 'เมื่อกดแล้วจะไม่สามารถย้อนกลับได้!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#cc0000',
+            cancelButtonColor: '#8B4513',
+            confirmButtonText: 'ใช่, ฉันต้องการยกเลิก!',
+            cancelButtonText: 'ไม่, เก็บไว้ก่อน'
+        }).then((result) => {
+            // If the user clicks the confirm button, submit the form
+            if (result.isConfirmed) {
+                // Submit the form
+                document.getElementById('cancelForm').submit();
+            }
+        });
+    });
+</script>

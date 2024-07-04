@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Book_Reservation</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Book_Reservation.styles.css" asp-append-version="true" />
+    <link href="~/font-awesome/css/all.css" rel="stylesheet" />
+
+    @*sweetalert*@
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
+
+    <!-- Custom styles specific to Edit view -->
+    @RenderSection("CustomStyles", required: false)
+
+    @*<link rel="stylesheet" href="~/css/blue-library-theme.css" />*@
+</head>
+<body>
+    <div class="form-container">
+        @RenderBody()
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,60 @@
+﻿@model Book_Reservation.Models.BookType
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Book</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BooktypeId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BooktypeId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BooktypeName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BooktypeName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BooktypeStatus)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BooktypeStatus)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InsertBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InsertBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InsertDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InsertDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UpdateBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UpdateBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UpdateDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UpdateDate)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.BooktypeId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

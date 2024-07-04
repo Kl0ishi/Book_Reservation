@@ -1,0 +1,233 @@
+﻿@model IEnumerable<Book_Reservation.ViewModels.BookViewModel>
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">การสั่งซื้อหนังสือ</h5>
+        <hr />
+        <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <label class="form-label">วันที่ซื้อ</label>
+                        <input  type="text" class="form-control" value="@ViewBag.currentDate">
+
+                        <label class="form-label">Order ID</label>
+                        <input id="orderId" type="text" class="form-control" value="@ViewBag.SaleCode" readonly>
+
+                        <label class="form-label">All items</label>
+                        <span class="form-control" id="allItems">0</span>
+
+                        <label class="form-label">Vat</label>
+                        <span class="form-control" id="vat">7%</span>
+
+                        <label class="form-label">Total Price</label>
+                        <span class="form-control" id="totalPrice">0.00</span>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> เพิ่มรายการสั่งซื้อ</a>
+                <div class="mt-3"></div>
+                <div id="cartItems">
+                    <!-- CartItems will display here-->
+                </div>
+                <div class="mt-3">
+                    <a class="btn btn-success" id="submitBtn">Save</a>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">รายการหนังสือ</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.BookId)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.BookName)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.BookTypeName)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.BookIsbn)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.BookPrice)
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.BookId)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.BookName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.BookTypeName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.BookIsbn)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.BookPrice)
+                                            </td>
+                                            <td>
+                                                <a href="#" class="add-to-cart btn btn-primary" data-book-id="@item.BookId">Add</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(function () {
+            $(document).on('click', '.add-to-cart', function (e) {
+                e.preventDefault();
+                var bookId = $(this).data('book-id');
+                var bookName = $(this).closest('tr').find('td:eq(1)').text();
+                var bookPrice = $(this).closest('tr').find('td:eq(4)').text();
+                var bookIsbn = $(this).closest('tr').find('td:eq(3)').text();
+                var bookType = $(this).closest('tr').find('td:eq(2)').text();
+                var bookcount = document.getElementsByClassName('allItems')[0];
+
+                // Check if the item already exists in the cart
+                var existingItem = $('.card-title:contains(' + bookId + ')').closest('.card');
+                if (existingItem.length > 0) {
+                    var currentCount = parseInt(existingItem.find('.book-count').val());
+                    var newCount = currentCount + 1;
+                    existingItem.find('.book-count').val(newCount);
+                } else {
+                    // Item does not exist in the cart, add it as a new item
+                    var cartItemHtml = '<div class="card mb-3">';
+                    cartItemHtml += '<div class="card-body">';
+                    cartItemHtml += '<h5 class="card-title">' + bookId + '</h5>';
+                    cartItemHtml += '<h5 class="text">' + bookName + '</h5>';
+                    cartItemHtml += '<p class="card-text">Price: ' + bookPrice + '</p>';
+                    cartItemHtml += '<p class="card-text">ISBN: ' + bookIsbn + '</p>';
+                    cartItemHtml += '<p class="card-text">Type: ' + bookType + '</p>';
+                    cartItemHtml += '<div class="input-group mb-3">';
+                    cartItemHtml += '<lable class="input-group-text" for="bookCount_' + bookId + '">Count:</lable>';
+                    cartItemHtml += '<input type="number" class="form-control book-count" id="bookCount_' + bookId + '" value="1">';
+                    cartItemHtml += '</div>';
+                    cartItemHtml += '<button class="btn btn-danger remove-item">Remove</button>';
+                    cartItemHtml += '</div>';
+                    cartItemHtml += '</div>';
+
+                    $('#cartItems').append(cartItemHtml);
+                }
+                updateCart();
+            });
+            $(document).on('change', '.book-count', function () {
+                updateCart();
+            });
+
+            $(document).on('click', '.remove-item', function (e) {
+                e.preventDefault();
+                $(this).closest('.card').remove();
+                updateCart();
+            });
+            var saleNumber = '@ViewBag.SaleCode';
+            var currentDate = '@ViewBag.currentDate';
+
+            $('#submitBtn').click(function (e) {
+                e.preventDefault();
+                
+                // Update cart items and perform the calculation
+                updateCart(function (count, totalPrice, items) {
+                    // Create an object to send the data
+                    var data = {
+                        SaleCode: saleNumber,
+                        PurchaseDate: currentDate,
+                        SaleNum: count,
+                        SaleTotal: totalPrice,
+                        items: items
+
+                    };
+                    console.log(data);
+
+                    // Make an AJAX POST request to the controller action
+                    $.ajax({
+                        url: '@Url.Action("Create", "Sale")',
+                        type: 'POST',
+                        data: data,
+                        success: function (response) {
+                            // Handle success response
+                        },
+                        error: function (xhr, status, error) {
+                            // Handle error response
+                        }
+                    });
+                });
+            });
+            function updateCart(callback) {
+                var count = 0;
+                var totalPrice = 0;
+                var items = [];
+
+                // Calculate total price
+                $('#cartItems').find('.card').each(function () {
+                    var priceText = $(this).find('.card-text').text().replace('Price: ', '');
+                    var price = parseFloat(priceText);
+
+                    var quantity = $(this).find('.book-count').val();
+                    var itemTotalPrice = price * quantity;
+
+                    totalPrice += itemTotalPrice;
+                    count += parseInt(quantity);
+
+                    var BookId = $(this).find('.card-title').text();
+                    var BookNum = $(this).find('.book-count').val();
+                    var BookTotal = price * BookNum;
+                    var item = {
+                        BookId: BookId,
+                        BookNum: BookNum,
+                        BookTotal: BookTotal
+                    };
+                    items.push(item);
+                });
+
+                $('#allItems').text(count);
+                $('#totalPrice').text(totalPrice.toFixed(2)); // Display total price with 2 decimal places
+
+                // Invoke the callback with the calculated values and items array
+                callback(count, totalPrice, items);
+            }
+        });
+    </script>
+
+}
